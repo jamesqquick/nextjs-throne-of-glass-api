@@ -6,7 +6,7 @@ declare global {
     var prisma: PrismaClient | undefined
 }
 
-export default prisma =
+export const prisma =
     global.prisma ||
     new PrismaClient({
         log: ['query'],
