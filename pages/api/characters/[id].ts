@@ -1,4 +1,4 @@
-import { Character } from '@prisma/client'
+import { tog_character } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../utils/prisma'
 
@@ -7,7 +7,7 @@ type ErrorResponse = {
 }
 
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Character | ErrorResponse>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<tog_character | ErrorResponse>) => {
     if (req.method !== 'GET') {
         res.status(405);
     }
@@ -19,7 +19,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Character | Err
             return res.status(400).json({ err: "Please enter a valid number for the character id" })
         }
 
-        const character = await prisma.character.findUnique({ where: { id: idNum } });
+        const character = await prisma.tog_character.findUnique({ where: { id: idNum } });
 
         if (!character) {
             return res.status(404)

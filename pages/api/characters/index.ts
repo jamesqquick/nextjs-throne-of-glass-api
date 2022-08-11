@@ -1,4 +1,4 @@
-import { Character } from '@prisma/client'
+import { tog_character } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../utils/prisma'
 
@@ -11,7 +11,7 @@ type QueryConfig = {
     skip?: number
 }
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Character[] | ErrorResponse>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<tog_character[] | ErrorResponse>) => {
     if (req.method !== 'GET') {
         res.status(405);
     }
@@ -38,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Character[] | E
             }
             queryConfig.skip = skip;
         }
-        const characters = await prisma.character.findMany(queryConfig)
+        const characters = await prisma.tog_character.findMany(queryConfig)
         return res.status(200).json(characters)
     } catch (err) {
         console.error(err);

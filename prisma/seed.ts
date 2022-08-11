@@ -7,7 +7,7 @@ import { Prisma, PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-const getCharacterInfo = async (characterName: string): Promise<Prisma.CharacterCreateInput> => {
+const getCharacterInfo = async (characterName: string): Promise<Prisma.tog_characterCreateInput> => {
     const { data } = await axios.get(`https://throneofglass.fandom.com/wiki/${characterName}`);
     const $ = cheerio.load(data);
     let name = $('div[data-source="full name"] > div.pi-data-value.pi-font').text();
@@ -18,7 +18,7 @@ const getCharacterInfo = async (characterName: string): Promise<Prisma.Character
         const last = parts[parts.length - 1];
         name = last.replace('_', ' ');
     }
-    const characterInfo: Prisma.CharacterCreateInput = {
+    const characterInfo: Prisma.tog_characterCreateInput = {
         name,
         species,
         image,
@@ -31,11 +31,11 @@ const loadCharacters = async () => {
 
         const characterInfoPromises = characterNames
             .map((characterName) => getCharacterInfo(characterName));
-        const characters: Prisma.CharacterCreateInput[] = await Promise.all(characterInfoPromises);
+        const characters: Prisma.tog_characterCreateInput[] = await Promise.all(characterInfoPromises);
         console.log("🚀 ~ file: seed.ts ~ line 138 ~ loadCharacters ~ characters", characters)
         // save them to the db
         console.log("Let's seed it");
-        await prisma.character.createMany({ data: characters });
+        await prisma.tog_character.createMany({ data: characters });
     } catch (error) {
         console.error(error)
     }
